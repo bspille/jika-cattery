@@ -34,10 +34,11 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
+                test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: "css-loader"
-                }),
-                test: /\.css$/
+                fallback: "style-loader",
+                use: "css-loader"
+                })
             }
            
         ] 

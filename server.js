@@ -15,7 +15,7 @@ if(process.env.NODE_ENV !== 'production'){
 else{
     app.use(express.static('build'));
     app.get('*', (req, res)=> {
-        res.sendFile(Path.join(__dirname, 'index.html'));
+        res.sendFile(Path.join(__dirname, 'build/index.html'));
     })
 }
 
