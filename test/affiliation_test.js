@@ -36,19 +36,19 @@ describe("affiliations", () => {
             .then(()=> done())
     });
     it("kittens have a queen", (done)=>{
-        console.log(jill);
+        assert(til.queen.name === "jill");
         done();
     });
     it("kittens have a tom", (done)=>{
-        console.log(burly);
+        assert(burly.tom.name === "omally");
         done();
     });
     it("queens have many kittens", (done)=>{
-        console.log(til);
+        assert(jill.kittens.length === 2);
         done();
     });
     it("toms have many kittens", (done)=>{
-        console.log(omally);
+        assert(omally.kittens.length === 2);
         done();
     });
 });
