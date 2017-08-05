@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 before((done)=>{
-    mongoose.connect("mongodb://localhost/jika_cattery")
+    mongoose.connect("mongodb://localhost/jika_cattery", { useMongoClient: true })
         .then( () => {
             console.log("Mongoose connection successful.");
             done()
