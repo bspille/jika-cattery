@@ -5,12 +5,17 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from "./reducers/";
-
-// const createStoreWithMiddleware = applyMiddleware()(createStore);
-// const store = createStoreWithMiddleware(reducers);
-const store = createStore(reducers);
+import Async from "../middlewares/async"
 import SiteMap from "./components/site-map"
+
+// create store with dev tools and middleware
+const store = createStore(reducers, composeWithDevTools(
+    applyMiddleware(Async),
+    // other store enhancers if any
+));
+
 
 reactDOM.render(
 <Provider store={store}>

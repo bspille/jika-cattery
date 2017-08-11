@@ -16,6 +16,17 @@ const VENDOR_LIBS = [
     "redux",
 ];
 
+// require axios is not defined
+// this reaches into the node modules and finds the bins to apply as externals
+// const nodeModules = {};
+// const nodeModules = fs.readdirSync('./node_modules'); // can't find the path to return a array of modules
+//     .filter(function(x) {
+//         return ['.bin'].indexOf(x) === -1;
+//     })
+//     .forEach(function(mod) {
+//         nodeModules[mod] = 'commonjs ' + mod;
+//     });
+
 module.exports = {
     entry: {
         bundle: "./src/index.js",
@@ -56,9 +67,11 @@ module.exports = {
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
         })
     ],
-    node: {
-        fs: "empty",
-        net: "empty"
+    target: "web",
+
+    // apply externals here to remove errors with out creating warnings
+    externals: {
+        express: "express",
     },
     devtool: "eval-source-map"
 };

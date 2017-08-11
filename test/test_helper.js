@@ -15,7 +15,7 @@ before((done)=>{
 });
 
 before((done)=>{
-    const { kittens, toms, queens } = mongoose.connection.collections;
-    Promise.all([ kittens.drop(), toms.drop(), queens.drop() ])
+    const { kittens, toms, queens, images } = mongoose.connection.collections;
+    Promise.all([ kittens.drop(), toms.drop(), queens.drop(), images.drop() ])
        .then(()=> done())
 });

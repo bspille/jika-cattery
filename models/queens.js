@@ -2,17 +2,22 @@
 
 const mongoose = require("mongoose");
 const Kitten = require("./kittens");
+const Image = require("./images");
 
 const Schema = mongoose.Schema;
 
 const queenSchema = new Schema({
-    img: {
-        type: String,
-        required: false
-    },
+    images: [{
+        type: Schema.Types.ObjectId,
+        ref: "Image"
+    }],
     name: {
         type: String,
         required: [ true, "Name is required!"],
+    },
+    birthday:{
+        type: Date,
+        required: false,
     },
     owner:{
         type: String,

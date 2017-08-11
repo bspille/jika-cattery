@@ -1,9 +1,10 @@
 // test create queen tom and kittens
 const mongoose = require("mongoose");
 const assert = require('assert');
-const Queen = require('../models/queens.js');
-const Tom = require("../models/toms.js");
-const Kitten = require("../models/kittens.js");
+const Queen = require('../models/queens');
+const Tom = require("../models/toms");
+const Kitten = require("../models/kittens");
+const Image = require("../models/images");
 // describe block
 
 describe("Create New Queen", () => {
@@ -11,7 +12,6 @@ describe("Create New Queen", () => {
 
     beforeEach((done)=>{
         sally = new Queen({
-            img: "http://lorempixel.com/400/400/cats",
             name: "sally"
         });
         sally.save()
@@ -36,7 +36,6 @@ describe("Create New Tom", () =>{
     
     beforeEach((done)=>{
         billy = new Tom({
-            img: "http://lorempixel.com/400/400/cats",
             name: "billy"
         });
         billy.save()
@@ -59,7 +58,6 @@ describe("Create New Kitten", () =>{
 
     beforeEach((done)=> {
          sue = new Kitten({
-            img: "http://lorempixel.com/400/400/cats",
             name: "sue"
         });
         sue.save()
@@ -72,6 +70,28 @@ describe("Create New Kitten", () =>{
     // it block
     it("Saves a Kitten", (done) =>{
         assert(!sue.isNew); 
+        done();
+    })
+
+});
+
+describe("Create New image", () =>{
+    let myImage;
+
+    beforeEach((done)=> {
+        myImage = new Image({
+            imgUrl: "http://lorempixel.com/400/400/cats"
+        });
+        myImage.save()
+            .then(()=> done())
+            .catch((err)=>{
+                console.log(`image save error ${err}`);
+            })
+    });
+
+    // it block
+    it("Saves a image", (done) =>{
+        assert(!myImage.isNew);
         done();
     })
 

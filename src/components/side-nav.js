@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import Drawer from "material-ui/Drawer";
+import MenuItem from "material-ui/MenuItem";
+import FlatButton from "material-ui/FlatButton";
 import { bindActionCreators } from "redux";
-import * as actionCreators from '../actions';
+import * as actionCreators from "../actions";
 
 
 
@@ -12,11 +13,16 @@ class SideNav extends Component {
   constructor(props) {
     super(props);
     console.log(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSideNav = this.handleSideNav.bind(this);
+    this.handleFormModal = this.handleFormModal.bind(this);
   }
 
-  handleClick(event){
+  handleSideNav(event){
     this.props.toggleSideNav(!this.props.sideNavOpen);
+  }
+
+  handleFormModal(event){
+    this.props.toggleForm(!this.props.formModalOpen);
   }
 
   render() {
@@ -24,10 +30,13 @@ class SideNav extends Component {
         <Drawer 
           docked={false}
           open={this.props.sideNavOpen}
-          onRequestChange={this.handleClick}
+          onRequestChange={this.handleSideNav}
         >
-          <MenuItem>Menu Item</MenuItem>
-          <MenuItem>Menu Item 2</MenuItem>
+          <MenuItem
+            onTouchTap={()=>{this.handleFormModal(); this.handleSideNav();}}>
+              Cat Form
+          </MenuItem>
+          <MenuItem>To be linked</MenuItem>
         </Drawer>
     );
   }
