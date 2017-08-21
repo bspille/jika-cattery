@@ -1,75 +1,25 @@
 // test create queen tom and kittens
 const mongoose = require("mongoose");
 const assert = require('assert');
-const Queen = require('../models/queens');
-const Tom = require("../models/toms");
-const Kitten = require("../models/kittens");
+const Cat = require("../models/cats");
 const Image = require("../models/images");
-// describe block
+const Owner = require("../models/owners");
 
-describe("Create New Queen", () => {
-    let sally;
 
-    beforeEach((done)=>{
-        sally = new Queen({
-            name: "sally"
-        });
-        sally.save()
-            .then(()=> done())
-            .catch((err)=>{
-                console.log(`queen save error ${err}`);
-            })
-            
-            
-    });
-  
-    // it block
-    it("Saves a Queen", (done) =>{
-       assert(!sally.isNew); 
-       done();
-    })
-
-});
-
-describe("Create New Tom", () =>{
-    let billy;
-    
-    beforeEach((done)=>{
-        billy = new Tom({
-            name: "billy"
-        });
-        billy.save()
-            .then(()=> done())
-            .catch((err)=>{
-                console.log(`tom save error ${err}`);
-            })
-    });
-    
-    // it block
-    it("Saves a Tom", (done) =>{
-       assert(!billy.isNew); 
-       done();
-    })
-
-});
-
-describe("Create New Kitten", () =>{
+describe("Create New cat", () =>{
     let sue;
 
     beforeEach((done)=> {
-         sue = new Kitten({
+         sue = new Cat({
             name: "sue"
         });
         sue.save()
             .then(()=> done())
-            .catch((err)=>{
-                console.log(`kitten save error ${err}`);
-            })
+
     });
- 
-    // it block
-    it("Saves a Kitten", (done) =>{
-        assert(!sue.isNew); 
+
+    it("Saves a cat", (done) =>{
+        assert(!sue.isNew);
         done();
     })
 
@@ -84,9 +34,7 @@ describe("Create New image", () =>{
         });
         myImage.save()
             .then(()=> done())
-            .catch((err)=>{
-                console.log(`image save error ${err}`);
-            })
+
     });
 
     // it block
@@ -95,4 +43,25 @@ describe("Create New image", () =>{
         done();
     })
 
+});
+
+describe("Create New Owner", ()=>{
+    let jikaCat;
+
+    beforeEach((done)=>{
+        jikaCat = new Owner({
+            admin: true,
+            imageUrl: "http://lorempixel.com/400/400/person",
+            name: "Jika Cats",
+            pin: "1234"
+        });
+        jikaCat.save()
+            .then(()=> done())
+
+    });
+
+    it("saves a owner", (done)=>{
+      assert(!jikaCat.isNew);
+      done();
+    })
 });

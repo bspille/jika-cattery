@@ -1,14 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const { fetchKittens } = require("../controllers/kitten-controller");
-const { fetchToms } = require("../controllers/tom-controller");
-const { fetchQueens } = require("../controllers/queen-controller");
+const { addNewCat, fetchKittens, fetchToms, fetchQueens } = require("../controllers/cat-controller");
+const { fetchSite } = require("../controllers/site-controller");
 
 // default route add routes above
+router.post("/api/add_cat/", addNewCat);
+
 router.post("/api/fetch_kittens/", fetchKittens);
 
 router.post("/api/fetch_toms/", fetchToms);
 
-router.post("/api/fetch_queens", fetchQueens);
+router.post("/api/fetch_queens/", fetchQueens);
+
+router.post("/api/fetch_site/", fetchSite);
 
 module.exports = router;

@@ -1,12 +1,11 @@
-import { TOGGLE_FORM } from "../actions/types";
+import { FETCH_SITE } from "../actions/types";
 
 
-export default function(state = false, { type, payload }) {
-    // console.log(JSON.stringify(action, null, 1));
+export default function(state = "null", { type, payload }) {
     switch(type){
 
         // if the action type is set id token return the payload from the action to state
-        case TOGGLE_FORM:
+        case FETCH_SITE:
             return payload;
 
         // return the default state if type is not found

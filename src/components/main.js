@@ -7,8 +7,7 @@ import Carousel from "./carousel";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions";
-import FullscreenDialog from "material-ui-fullscreen-dialog";
-import FlatButton from "material-ui/FlatButton";
+import CatModal from "./cat-modal";
 
 
 const styles = {
@@ -42,15 +41,14 @@ class Main extends Component {
     super(props);
     console.log(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleFormModal = this.handleFormModal.bind(this);
     this.state = {
       slideIndex: 0,
     };
-
   }
 
   componentWillMount(){
       // need to get all the cat images and store them in there respected states to be passed to the carousel as prop
+    this.props.fetchSite();
     this.props.fetchQueens();
     this.props.fetchToms();
     this.props.fetchKittens();
@@ -65,9 +63,8 @@ class Main extends Component {
       slideIndex: value,
     });
   }
-  handleFormModal(event){
-    this.props.toggleForm(!this.props.formModalOpen);
-  }
+
+
 
   render() {
 
@@ -91,7 +88,7 @@ class Main extends Component {
           onChangeIndex={this.handleChange}
         >
           <div style={styles.slide}>
-            Welcome to Jika Cattery
+              { this.props.site.welcomeMessage }
           </div>
           <div style={styles.slide}>
               Queens
@@ -108,17 +105,7 @@ class Main extends Component {
         </SwipeableViews>
 
           {/* this sets the full screen modal for the form  */}
-        <FullscreenDialog
-          open={this.props.formModalOpen}
-          onRequestClose={this.handleFormModal}
-          title={'Cat Form'}
-          actionButton={<FlatButton
-              label='Done'
-              onTouchTap={this.handleFormModal}
-          />}
-        >
-          welcome to the form
-        </FullscreenDialog>
+          <CatModal/>
       </div>
     );
   }

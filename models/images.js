@@ -13,7 +13,6 @@ const imageSchema = new Schema({
     },
     author: {
         type: String,
-        requried: true,
         default: "unknown"
     },
     title: {

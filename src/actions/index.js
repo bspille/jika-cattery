@@ -1,9 +1,12 @@
-import { FETCH_KITTENS, FETCH_TOMS, FETCH_QUEENS, TOGGLE_FORM, TOGGLE_SIDE_NAV } from "./types";
-import axios from "axios";
 
-export const toggleForm = (toggle)=>{
+
+import { ADD_NEW_CAT, FETCH_KITTENS, FETCH_QUEENS, FETCH_SITE, FETCH_TOMS, TOGGLE_CAT_MODAL, TOGGLE_SIDE_NAV } from  "../actions/types";
+import axios from "axios";
+// { TYPES: {FETCH_KITTENS, FETCH_QUEENS, FETCH_TOMS, TOGGLE_NEW_CAT_MODAL, TOGGLE_SIDE_NAV }}
+
+export const toggleCatModal = (toggle)=>{
     return {
-        type: TOGGLE_FORM,
+        type: TOGGLE_CAT_MODAL,
         payload: toggle
     }
 };
@@ -43,3 +46,20 @@ export const fetchQueens = (query) =>{
     }
 };
 
+// fetch all site data
+export const fetchSite = (query) =>{
+    const request = axios.post("/api/fetch_site/");
+    return {
+        type: FETCH_SITE,
+        payload: request
+    }
+};
+
+// add a new cat to the collection
+export const addNewCat = (newCat) =>{
+    const request = axios.post("/api/add_cat/");
+    return {
+        type: ADD_NEW_CAT,
+        paylaod: request
+    }
+};

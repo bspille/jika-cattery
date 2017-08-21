@@ -14,15 +14,15 @@ class SideNav extends Component {
     super(props);
     console.log(this);
     this.handleSideNav = this.handleSideNav.bind(this);
-    this.handleFormModal = this.handleFormModal.bind(this);
+    this.handleCatModal = this.handleCatModal.bind(this);
   }
 
   handleSideNav(event){
     this.props.toggleSideNav(!this.props.sideNavOpen);
   }
 
-  handleFormModal(event){
-    this.props.toggleForm(!this.props.formModalOpen);
+  handleCatModal(event){
+    this.props.toggleCatModal(!this.props.catModal);
   }
 
   render() {
@@ -33,7 +33,7 @@ class SideNav extends Component {
           onRequestChange={this.handleSideNav}
         >
           <MenuItem
-            onTouchTap={()=>{this.handleFormModal(); this.handleSideNav();}}>
+            onTouchTap={()=>{this.handleCatModal(); this.handleSideNav();}}>
               Cat Form
           </MenuItem>
           <MenuItem>To be linked</MenuItem>

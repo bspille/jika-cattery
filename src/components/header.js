@@ -20,7 +20,7 @@ import * as actionCreators from '../actions';
     render(){
         return (
             <AppBar
-                title="Jika Cattery"
+                title={this.props.site.name}
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 onLeftIconButtonTouchTap={this.handleClick}
             />    

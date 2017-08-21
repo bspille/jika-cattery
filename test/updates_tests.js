@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const assert = require('assert');
-const Queen = require('../models/queens');
-const Tom = require("../models/toms");
-const Kitten = require("../models/kittens");
+const Cat = require("../models/cats");
 const Image = require("../models/images");
+const Owner = require("../models/owners");
 
 describe("Updates fields after they are saved", ()=>{
+    let catOwner2;
     let jilly;
     let oma;
     let tilly;
@@ -20,16 +20,19 @@ describe("Updates fields after they are saved", ()=>{
     let Image_8;
 
     before((done)=>{
-        jilly = new Queen({
+        catOwner2 = new Owner({
+            name: "bob"
+        });
+        jilly = new Cat({
             name: "jilly",
         });
-        oma = new Tom({
+        oma = new Cat({
             name: "oma",
         });
-        tilly = new Kitten({
+        tilly = new Cat({
             name: "tilly",
         });
-        billy = new Kitten({
+        billy = new Cat({
             name: "billy",
         });
         Image_1 = new Image({
@@ -44,6 +47,7 @@ describe("Updates fields after they are saved", ()=>{
         });
 
         Promise.all([
+            catOwner2.save(),
             jilly.save(),
             oma.save(),
             tilly.save(),
@@ -54,26 +58,18 @@ describe("Updates fields after they are saved", ()=>{
         ])
             .then(()=> {
                 Promise.all([
-                    Queen.update({_id: jilly._id}, {$push: { kittens: tilly, images: Image_1}, $set: { birthday: new Date("2017-08-05"), owner: "joe"}}),
-                    Tom.update({_id: oma._id}, {$push: { kittens: tilly, images: Image_2}, $set: { birthday: new Date("2017-08-05"), owner: "joe"}}),
-                    Kitten.update({_id: tilly._id}, {$push: {images: Image_3._id}, $set: {birthday: new Date("2017-08-05"), owner: "joe", tom: oma, queen: jilly }}),
+                    Cat.update({_id: jilly._id}, {$push: { kittens: tilly, images: Image_1}, $set: { birthday: new Date("2017-08-05"), gender: "female", owner: catOwner2}}),
+                    Cat.update({_id: oma._id}, {$push: { kittens: tilly, images: Image_2}, $set: { birthday: new Date("2017-08-05"), gender: "male", owner: catOwner2}}),
+                    Cat.update({_id: tilly._id}, {$push: {images: Image_3._id}, $set: {birthday: new Date("2017-08-05"), owner: catOwner2, tom: oma, queen: jilly }}),
                     Image.update({_id: Image_1._id}, {$set: { author: "jimmy", date: new Date("2017-08-05"), title: "my new cat"}}),
+                    Owner.update({_id: catOwner2._id}, {$set: {pin: "1234"}, $push: {cats: jilly}})
                 ])
                     .then(()=> done())
             })
     });
-    it("Queens can find and save a new image", (done)=>{
-        Queen.findOne({_id: jilly._id})
-            .then((res)=>{
 
-                if(toString(res._id) === toString(jilly._id) && res.images.length > 0){
-                    assert(toString(res.images[0]) === toString(Image_1.imageUrl));
-                    done()
-                }
-            });
-    });
-    it("Queens can find and save a new kitten", (done)=>{
-        Queen.findOne({_id: jilly._id})
+    it("Cats can find and save a new kitten", (done)=>{
+        Cat.findOne({_id: jilly._id})
             .then((res)=>{
 
                 if(toString(res._id) === toString(jilly._id) && res.kittens.length > 0){
@@ -82,67 +78,10 @@ describe("Updates fields after they are saved", ()=>{
                 }
             });
     });
-    it("Queens can find and save a birthday", (done)=>{
-        Queen.findOne({_id: jilly._id})
-            .then((res)=>{
 
-                if(toString(res._id) === toString(jilly._id) && res.birthday){
-                    assert(toString(res.birthday) === toString(new Date("2017-08-05")));
-                    done()
-                }
-            });
-    });
-    it("Queens can find and save a new owners", (done)=>{
-        Queen.findOne({_id: jilly._id})
-            .then((res)=>{
 
-                if(toString(res._id) === toString(jilly._id) && res.owner){
-                    assert(toString(res.owner) === toString("joe"));
-                    done()
-                }
-            });
-    });
-    it("Toms can find and save a new image", (done)=>{
-        Tom.findOne({_id: oma._id})
-            .then((res)=>{
-                if(toString(res._id) === toString(oma._id) && res.images.length > 0){
-                    assert(toString(res.images[0]) === toString(Image_2.imageUrl));
-                    done()
-                }
-            });
-    });
-    it("Toms can find and save a new kitten", (done)=>{
-        Tom.findOne({_id: oma._id})
-            .then((res)=>{
-
-                if(toString(res._id) === toString(oma._id) && res.kittens.length > 0){
-                    assert(toString(res.kittens[0]._id) === toString(tilly._id));
-                    done()
-                }
-            });
-    });
-    it("Toms can find and save a birthday", (done)=>{
-        Tom.findOne({_id: oma._id})
-            .then((res)=>{
-
-                if(toString(res._id) === toString(oma._id) && res.birthday){
-                    assert(toString(res.birthday) === toString(new Date("2017-08-05")));
-                    done()
-                }
-            });
-    });
-    it("Toms can find and save a new owners", (done)=>{
-        Tom.findOne({_id: oma._id})
-            .then((res)=>{
-
-                if(toString(res._id) === toString(oma._id) && res.owner){
-                    assert(toString(res.owner) === toString("joe"));
-                    done()
-                }
-            });
-    });
-    it("Kittens can find and save a new image", (done)=>{
-        Kitten.findOne({_id: tilly._id})
+    it("Cats can find and save a new image", (done)=>{
+        Cat.findOne({_id: tilly._id})
             .then((res)=>{
 
                 if(toString(res._id) === toString(tilly._id) && res.images.length > 0){
@@ -151,8 +90,8 @@ describe("Updates fields after they are saved", ()=>{
                 }
             });
     });
-    it("Kittens can find and save a tom", (done)=>{
-        Kitten.findOne({_id: tilly._id})
+    it("Cats can find and save a tom", (done)=>{
+        Cat.findOne({_id: tilly._id})
             .then((res)=>{
 
                 if(toString(res._id) === toString(tilly._id) && res.tom){
@@ -161,8 +100,8 @@ describe("Updates fields after they are saved", ()=>{
                 }
             });
     });
-    it("Kittens can find and save a queen", (done)=>{
-        Kitten.findOne({_id: tilly._id})
+    it("Cats can find and save a queen", (done)=>{
+        Cat.findOne({_id: tilly._id})
             .then((res)=>{
 
                 if(toString(res._id) === toString(tilly._id) && res.queen){
@@ -171,8 +110,8 @@ describe("Updates fields after they are saved", ()=>{
                 }
             });
     });
-    it("Kittens can find and save a birthday", (done)=>{
-        Kitten.findOne({_id: tilly._id})
+    it("Cats can find and save a birthday", (done)=>{
+        Cat.findOne({_id: tilly._id})
             .then((res)=>{
 
                 if(toString(res._id) === toString(tilly._id) && res.birthday){
@@ -181,12 +120,12 @@ describe("Updates fields after they are saved", ()=>{
                 }
             });
     });
-    it("Kittens can find and save a new owners", (done)=>{
-        Kitten.findOne({_id: tilly._id})
+    it("Cats can find and save a new owners", (done)=>{
+        Cat.findOne({_id: tilly._id})
             .then((res)=>{
 
                 if(toString(res._id) === toString(tilly._id) && res.owner){
-                    assert(toString(res.owner) === toString("joe"));
+                    assert(toString(res.owner) === toString(catOwner2._id));
                     done()
                 }
             });
@@ -229,6 +168,15 @@ describe("Updates fields after they are saved", ()=>{
                     done()
                 }
             });
+    });
+    it("Owners can find and save a cat", (done)=>{
+        Owner.findOne({_id: catOwner2._id})
+            .then((res)=>{
+            if(toString(res._id) === toString(catOwner2._id) && res.cats){
+                assert(toString(res.cats[0]._id) === toString(jilly._id));
+                done();
+            }
+        });
     });
 
 });
