@@ -12,7 +12,7 @@
     "build": "NODE_ENV=production npm run clean && webpack -p",
     "serve": "webpack-dev-server",
     "postinstall": "npm run build",
-    "start-dev": "nodemon server"
+    "dev": "nodemon server"
   },
   "repository": {
     "type": "git",
